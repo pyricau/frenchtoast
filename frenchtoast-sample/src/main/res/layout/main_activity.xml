@@ -8,17 +8,17 @@
     >
 
   <Button
-      android:id="@+id/toggle_baguettes"
+      android:id="@+id/show_baguette"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/toggle_baguettes"
+      android:text="@string/show_baguette"
       />
 
   <Button
-      android:id="@+id/show_long_toast"
+      android:id="@+id/toggle_infinite_toast"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/show_long_toast"
+      android:text="@string/toggle_infinite_toast"
       />
 
 

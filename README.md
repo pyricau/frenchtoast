@@ -11,7 +11,7 @@ FrenchToast gives you absolute control over your app Toasts. It does so by dupli
 
 Unlike other *Toast-like* libraries, FrenchToast doesn't add a view to the root of your activity. Instead, it creates a new Window for each Toast, exactly like the real Android Toasts.
 
-## Setup
+## Getting Started
 
 In your `build.gradle`:
 
@@ -21,86 +21,91 @@ In your `build.gradle`:
  }
 ```
 
-## Crafting Bespoke French Toasts
-
-FrenchToast API is similar to Toast:
-
-```java
-FrenchToast toast = FrenchToast.makeText(context, "I love Baguettes!");
-// Toast is shown forever, as long as the process lives:
-toast.show();
-// Or until you call hide:
-toast.hide();
-```
-
-You can dip a Toast to make a FrenchToast:
-
-```java
-Toast toast = Toast.makeText(context, "BREAD ALL THE THINGS!", LENGTH_SHORT);
-toast.setGravity(LEFT | TOP, 0, 0);
-FrenchToast frenchToast = FrenchToast.dip(toast);
-frenchToast.show();
-```
-
-You can also make a FrenchToast from a layout:
-
-```java
-FrenchToast toast = FrenchToast.makeLayout(context, R.layout.fried_toast);
-toast.show();
-```
-
-## Serial Toaster
-
-Of course, showing several Toasts at the same time could be confusing. FrenchToast provides a ToastQueue to make sure you only show one Toast at a time.
-
-```java
-ToastQueue queue = new LifecycleToastQueue();
-// Show toast1 for 3 seconds, starting now:
-queue.enqueue(toast1, 3, SECONDS);
-// Also provides methods for Android default LENGTH_SHORT and LENGTH_LONG durations.
-queue.enqueueShort(toast2);
-queue.enqueueLong(toast3);
-// You can remove a toast from the queue, hiding it immediately if it is already showing:
-queue.cancel(toast1);
-// You can also clear the queue from all Toasts, including any Toast currently showing.
-queue.clear();
-```
-
-The queues can be paused and resumed to scope toasts to subparts of your app.
-
-```java
-LifecycleToastQueue queue = new LifecycleToastQueue();
-// Immediately start showing a Toast:
-queue.enqueue(toast1, 3, SECONDS);
-// Pause the queue, toast1 disappears:
-queue.pause();
-// You can enqueue toasts while the queue is paused:
-queue.enqueueShort(toast2);
-// toast1 is shown for the entire 3 seconds again, then toast2 is shown.
-queue.resume();
-```
-
-## ActivityToasts
-
-Managing the lifecycle of a toast queue can be tricky. ActivityToasts associates a LifecycleToastQueue to a live activity, making sure it survives activity configuration changes. That way, you can scope toasts to a given activity. They will hide when the activity is paused, and show up again when the activity is resumed.
-
-You need to setup `ActivityToasts` in your `Application` class.
+You need to setup `FrenchToast` in your `Application` class:
 
 ```java
 public class ExampleApplication extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
-    ActivityToasts.install(this);
+    FrenchToast.install(this);
   }
 }
 ```
 
-Then the `ToastQueue` is available from any context that wraps an activity through `ActivityToasts.with(context)`.
+You are ready to Toast!
 
 ```java
-FrenchToast toast = FrenchToast.makeText(context, R.string.toast_text);
-ActivityToasts.with(context).enqueue(toast, 3, SECONDS);
+FrenchToast.with(context).showText("I love Baguettes!");
+```
+
+A `FrenchToast`:
+
+* **hides** when the Activity is **paused**,
+* shows again when its resumed,
+* has a default duration of `Toast.LENGTH_LONG`,
+* **survives configuration changes**,
+* is **queued**, so that only one Toast shows at once.
+
+You can customize the default duration:
+
+```java
+FrenchToast.with(context).shortLength().showText(R.string.short_bread);
+
+FrenchToast.with(context).longLength().showText(R.string.long_bread);
+
+FrenchToast.with(context).length(3, SECONDS).showText(R.string.bespoke_bread);
+```
+
+The duration of a Toast resets when the activity is paused / resumed, to make sure the user had enough time to see the Toast.
+
+## Bespoke Toasts
+
+A Toast can be created from a layout:
+
+```java
+FrenchToast.with(context).showLayout(R.layout.toasted_baguette);
+```
+
+You can also dip an Android Toast:
+
+```java
+Toast toast = Toast.makeText(context, "BREAD ALL THE THINGS!", LENGTH_SHORT);
+toast.setGravity(LEFT | TOP, 0, 0);
+FrenchToast.with(context).showDipped(toast);
+```
+
+## Unplugging the Toaster
+
+A Toast can be canceled:
+
+```
+Toasted toasted = FrenchToast.with(context).showText("I love Baguettes!");
+// I'd rather show a Bagel.
+toasted.cancel();
+```
+
+You can also clear all queued Toasts for a given Activity:
+
+```java
+FrenchToast.with(context).clear();
+```
+
+## Context vs Activity
+
+`FrenchToast.with()` takes a Context, however it expects that `Context` to be an `Activity` or to wrap an `Activity`, because FrenchToast keeps one `ToastQueue` for each activity.
+
+## Crafting your own Mixture
+
+If you want more control over when to show / hide Toasts, you can directly use `Mixture`:
+
+```java
+Toast toast = Toast.makeText(context, "BREAD ALL THE THINGS!", LENGTH_SHORT);
+Mixture mixture = Mixture.dip(toast);
+// The Toast is shown forever, as long as the process lives:
+mixture.show();
+// Or until you call hide:
+mixture.hide();
 ```
 
 ![logo.png](assets/logo.png)

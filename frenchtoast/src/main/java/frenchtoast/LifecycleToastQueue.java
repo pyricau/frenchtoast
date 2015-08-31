@@ -2,7 +2,6 @@ package frenchtoast;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.concurrent.TimeUnit;
 
 import static frenchtoast.ToastInternals.MAIN_HANDLER;
 import static frenchtoast.ToastInternals.assertMainThread;
@@ -17,11 +16,11 @@ import static frenchtoast.ToastInternals.assertMainThread;
 public final class LifecycleToastQueue implements ToastQueue {
 
   static final class EnqueuedToast {
-    final FrenchToast frenchToast;
+    final Mixture mixture;
     final long durationMs;
 
-    EnqueuedToast(FrenchToast frenchToast, long durationMs) {
-      this.frenchToast = frenchToast;
+    EnqueuedToast(Mixture mixture, long durationMs) {
+      this.mixture = mixture;
       this.durationMs = durationMs;
     }
 
@@ -30,21 +29,13 @@ public final class LifecycleToastQueue implements ToastQueue {
         return false;
       }
       EnqueuedToast that = (EnqueuedToast) other;
-      return frenchToast == that.frenchToast;
+      return mixture == that.mixture;
     }
 
     @Override public int hashCode() {
-      return System.identityHashCode(frenchToast);
+      return System.identityHashCode(mixture);
     }
   }
-
-  /*
-   * Constants based on https://github.com/android/platform_frameworks_base/blob/master/services/
-   * core/java/com/android/server/notification/NotificationManagerService.java#L140
-   */
-
-  private static final int ANDROID_LONG_DELAY_MS = 3_500;
-  private static final int ANDROID_SHORT_DELAY_MS = 2_000;
 
   private final Deque<EnqueuedToast> toastDeque = new ArrayDeque<>();
 
@@ -60,18 +51,6 @@ public final class LifecycleToastQueue implements ToastQueue {
     assertMainThread();
   }
 
-  @Override public void enqueueLong(FrenchToast frenchToast) {
-    enqueue(frenchToast, ANDROID_LONG_DELAY_MS);
-  }
-
-  @Override public void enqueueShort(FrenchToast frenchToast) {
-    enqueue(frenchToast, ANDROID_SHORT_DELAY_MS);
-  }
-
-  @Override public void enqueue(FrenchToast frenchToast, long duration, TimeUnit timeUnit) {
-    enqueue(frenchToast, timeUnit.toMillis(duration));
-  }
-
   @Override public void clear() {
     assertMainThread();
     if (toastDeque.isEmpty()) {
@@ -79,13 +58,13 @@ public final class LifecycleToastQueue implements ToastQueue {
     }
     if (!paused) {
       EnqueuedToast firstToast = toastDeque.getFirst();
-      firstToast.frenchToast.hide();
+      firstToast.mixture.hide();
       MAIN_HANDLER.removeCallbacks(hideToast);
     }
     toastDeque.clear();
   }
 
-  @Override public boolean cancel(FrenchToast canceledToast) {
+  @Override public boolean cancel(Mixture canceledMixture) {
     assertMainThread();
     if (toastDeque.isEmpty()) {
       return false;
@@ -95,14 +74,14 @@ public final class LifecycleToastQueue implements ToastQueue {
 
     if (!paused) {
       EnqueuedToast firstToast = toastDeque.getFirst();
-      if (firstToast.frenchToast == canceledToast) {
-        firstToast.frenchToast.hide();
+      if (firstToast.mixture == canceledMixture) {
+        firstToast.mixture.hide();
         MAIN_HANDLER.removeCallbacks(hideToast);
         showNext = true;
       }
     }
 
-    EnqueuedToast toDelete = new EnqueuedToast(canceledToast, 0);
+    EnqueuedToast toDelete = new EnqueuedToast(canceledMixture, 0);
     boolean removed = toastDeque.remove(toDelete);
 
     if (showNext) {
@@ -122,7 +101,7 @@ public final class LifecycleToastQueue implements ToastQueue {
       return;
     }
     EnqueuedToast firstToast = toastDeque.getFirst();
-    firstToast.frenchToast.hide();
+    firstToast.mixture.hide();
     MAIN_HANDLER.removeCallbacks(hideToast);
   }
 
@@ -135,10 +114,10 @@ public final class LifecycleToastQueue implements ToastQueue {
     showFirstToast();
   }
 
-  private void enqueue(FrenchToast frenchToast, long durationMs) {
+  @Override public void enqueue(Mixture mixture, long durationMs) {
     assertMainThread();
     boolean empty = toastDeque.isEmpty();
-    toastDeque.add(new EnqueuedToast(frenchToast, durationMs));
+    toastDeque.add(new EnqueuedToast(mixture, durationMs));
     if (empty) {
       showFirstToast();
     }
@@ -149,13 +128,13 @@ public final class LifecycleToastQueue implements ToastQueue {
       return;
     }
     EnqueuedToast currentToast = toastDeque.getFirst();
-    currentToast.frenchToast.show();
+    currentToast.mixture.show();
     MAIN_HANDLER.postDelayed(hideToast, currentToast.durationMs);
   }
 
   private void hideToast() {
     EnqueuedToast currentToast = toastDeque.removeFirst();
-    currentToast.frenchToast.hide();
+    currentToast.mixture.hide();
     showFirstToast();
   }
 }

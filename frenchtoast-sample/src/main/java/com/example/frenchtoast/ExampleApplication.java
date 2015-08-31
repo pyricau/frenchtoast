@@ -1,27 +1,31 @@
 package com.example.frenchtoast;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import frenchtoast.ActivityToasts;
+import android.widget.Toast;
 import frenchtoast.FrenchToast;
+import frenchtoast.Mixture;
 
-public class ExampleApplication extends Application {
+import static android.widget.Toast.LENGTH_SHORT;
+
+@SuppressLint("ShowToast") public class ExampleApplication extends Application {
 
   public static ExampleApplication from(Context context) {
     return (ExampleApplication) context.getApplicationContext();
   }
 
-  private FrenchToast baguetteToast;
+  private Mixture infiniteToast;
 
   @Override public void onCreate() {
     super.onCreate();
-    ActivityToasts.install(this);
+    FrenchToast.install(this);
   }
 
-  public FrenchToast getBaguetteToast() {
-    if (baguetteToast == null) {
-      baguetteToast = FrenchToast.makeLayout(this, R.layout.baguette_toast);
+  public Mixture getInfiniteToast() {
+    if (infiniteToast == null) {
+      infiniteToast = Mixture.dip(Toast.makeText(this, R.string.toast_text, LENGTH_SHORT));
     }
-    return baguetteToast;
+    return infiniteToast;
   }
 }
