@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">FrenchToast Sample</string>
+  <string name="toggle_baguettes">Toggle Baguette</string>
+  <string name="show_long_toast">Show 10 second Toast</string>
+  <string name="toast_text">Nothing like a fresh Baguette!</string>
+</resources>

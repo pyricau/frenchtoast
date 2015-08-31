@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+  compile project(':frenchtoast')
+}
+
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  compileOptions {
+    sourceCompatibility rootProject.ext.javaVersion
+    targetCompatibility rootProject.ext.javaVersion
+  }
+
+  defaultConfig {
+    applicationId "com.example.frenchtoast"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.compileSdkVersion
+
+    versionCode 1
+    versionName "1.0"
+  }
+
+  buildTypes {
+    debug
+  }
+}
