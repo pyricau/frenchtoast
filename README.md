@@ -4,12 +4,12 @@
 
 Android Toasts are amazing, but they have two major drawbacks:
 
-* You cannot control **when to show them** and **their duration**. Other apps can enqueue toasts that will delay yours from showing up. 
+* You cannot control **when they show up** as well as their **duration**. Other apps can enqueue toasts that will delay yours from showing up. 
 * They [break context](http://cyrilmottier.com/2012/07/24/the-making-of-prixing-4-activity-tied-notifications/): they remain on screen when the user switches to other activities.
 
 FrenchToast gives you absolute control over your app Toasts. It does so by duplicating the internals of Android Toasts and giving you access.
 
-Unlike other *Toast like* libraries, FrenchToast doesn't add a view to the root of your activity view hierarchy. Instead, it creates a new Window for each Toast, exactly like the real Android Toasts.
+Unlike other *Toast-like* libraries, FrenchToast doesn't add a view to the root of your activity. Instead, it creates a new Window for each Toast, exactly like the real Android Toasts.
 
 ## Setup
 
