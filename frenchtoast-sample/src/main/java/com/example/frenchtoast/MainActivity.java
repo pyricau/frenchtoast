@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
   }
 
   private void showBaguetteToast() {
-    FrenchToast.with(this).length(1, SECONDS).showLayout(R.layout.baguette_toast);
+    FrenchToast.with(this).length(3, SECONDS).showLayout(R.layout.baguette_toast);
   }
 
   private void toggleInfiniteToast() {
