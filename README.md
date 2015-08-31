@@ -17,7 +17,7 @@ In your `build.gradle`:
 
 ```gradle
  dependencies {
-   compile 'info.piwai.frenchtoast:frenchtoast:TODO'
+   compile 'info.piwai.frenchtoast:frenchtoast:0.1'
  }
 ```
 
