@@ -37,5 +37,4 @@ task sourceJar(type: Jar) {
   from 'src/main/java'
 }
 
-apply from: rootProject.file('gradle/checkstyle.gradle')
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
