@@ -119,7 +119,11 @@ A **French toast** is a dish made of bread **dipped** in a **mixture** of beaten
 
 ### Is this a serious project?
 
-Yes. Despite the puns, this code is production ready. It is heavily inspired from [android.widget.Toast](https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java). 
+Yes. Despite the puns, this code is production ready. It is heavily inspired from [android.widget.Toast](https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java).
+
+### What's the minimum supported version of Android?
+
+FrenchToast requires a minimum SDK version of 14 or above.
 
 ### Why reimplement Toast?
 
