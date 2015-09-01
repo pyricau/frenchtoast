@@ -12,7 +12,7 @@ FrenchToast gives you absolute control over your app Toasts. It does so by dupli
 
 Unlike other *Toast-like* libraries, FrenchToast doesn't add a view to the root of your activity. Instead, it creates a new Window for each Toast, exactly like the real Android Toasts.
 
-![demo.png](assets/demo.png)
+![demo.gif](assets/demo.gif)
 
 ## Getting Started
 
