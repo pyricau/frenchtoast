@@ -45,7 +45,7 @@ FrenchToast.with(context).showText("I love Baguettes!");
 A `FrenchToast`:
 
 * **hides** when the Activity is **paused**,
-* shows again when its resumed,
+* shows again when it's resumed,
 * has a default duration of `Toast.LENGTH_LONG`,
 * **survives configuration changes**,
 * is **queued**, so that only one Toast shows at once.
