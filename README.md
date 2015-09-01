@@ -2,7 +2,7 @@
 
 *Stale Android Toasts made tasty.*
 
-Android Toasts are amazing, but they have two major drawbacks:
+Android Toasts are amazing, but they have a few major drawbacks:
 
 * You cannot control **when they show up** as well as their **duration**. Other apps can enqueue toasts that will delay yours from showing up. 
 * They [break context](http://cyrilmottier.com/2012/07/24/the-making-of-prixing-4-activity-tied-notifications/): they remain on screen when the user switches to other activities.
@@ -121,9 +121,9 @@ A **French toast** is a dish made of bread **dipped** in a **mixture** of beaten
 
 Yes. Despite the puns, this code is production ready. It is heavily inspired from [android.widget.Toast](https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java).
 
-### What's the minimum supported version of Android?
+### What's the minimum supported Android?
 
-FrenchToast requires a minimum SDK version of 14 or above.
+FrenchToast requires a **minimum SDK version of 14** or above, because it uses (Application.ActivityLifecycleCallbacks)[http://developer.android.com/reference/android/app/Application.ActivityLifecycleCallbacks.html].
 
 ### Why reimplement Toast?
 
