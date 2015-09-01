@@ -6,10 +6,13 @@ Android Toasts are amazing, but they have two major drawbacks:
 
 * You cannot control **when they show up** as well as their **duration**. Other apps can enqueue toasts that will delay yours from showing up. 
 * They [break context](http://cyrilmottier.com/2012/07/24/the-making-of-prixing-4-activity-tied-notifications/): they remain on screen when the user switches to other activities.
+* The API is error prone: `Toast.makeText(context, "Important Toast", LENGTH_LONG); // Don't forget show()!`
 
 FrenchToast gives you absolute control over your app Toasts. It does so by duplicating the internals of Android Toasts and giving you access.
 
 Unlike other *Toast-like* libraries, FrenchToast doesn't add a view to the root of your activity. Instead, it creates a new Window for each Toast, exactly like the real Android Toasts.
+
+![demo.png](assets/demo.png)
 
 ## Getting Started
 
@@ -17,7 +20,7 @@ In your `build.gradle`:
 
 ```gradle
  dependencies {
-   compile 'info.piwai.frenchtoast:frenchtoast:0.1'
+   compile 'info.piwai.frenchtoast:frenchtoast:1.0'
  }
 ```
 
@@ -107,6 +110,22 @@ mixture.show();
 // Or until you call hide:
 mixture.hide();
 ```
+
+## FAQ
+
+### What's up with the strange names?
+
+A **French toast** is a dish made of bread **dipped** in a **mixture** of beaten eggs and then fried.
+
+### Is this a serious project?
+
+Yes. Despite the puns, this code is production ready. It is heavily inspired from [android.widget.Toast](https://github.com/android/platform_frameworks_base/blob/master/core/java/android/widget/Toast.java). 
+
+### Why reimplement Toast?
+
+Because we can have better Toasts, so we should.
+
+I read the source of `Toast` when I was flying back, still under a creative influence of Droidcon NYC. I realized it could be done, so I wrote FrenchToast.
 
 ![logo.png](assets/logo.png)
 

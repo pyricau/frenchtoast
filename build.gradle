@@ -26,7 +26,7 @@ ext {
   javaVersion = JavaVersion.VERSION_1_7
 
   GROUP = 'info.piwai.frenchtoast'
-  VERSION_NAME = "0.2-SNAPSHOT"
+  VERSION_NAME = "1.0"
   POM_PACKAGING = "pom"
   POM_DESCRIPTION= "French Toast"
 
