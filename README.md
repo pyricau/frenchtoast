@@ -123,7 +123,7 @@ Yes. Despite the puns, this code is production ready. It is heavily inspired fro
 
 ### What's the minimum supported Android?
 
-FrenchToast requires a **minimum SDK version of 14** or above, because it uses (Application.ActivityLifecycleCallbacks)[http://developer.android.com/reference/android/app/Application.ActivityLifecycleCallbacks.html].
+FrenchToast requires a **minimum SDK version of 14** or above, because it uses [Application.ActivityLifecycleCallbacks](http://developer.android.com/reference/android/app/Application.ActivityLifecycleCallbacks.html).
 
 ### Why reimplement Toast?
 
