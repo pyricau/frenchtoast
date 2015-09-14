@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.support.annotation.MainThread;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -45,7 +46,7 @@ public final class Mixture {
     }
   }
 
-  public void show() {
+  @MainThread public void show() {
     assertMainThread();
     View view = toast.getView();
     if (view == null) {
@@ -82,7 +83,7 @@ public final class Mixture {
     trySendAccessibilityEvent(view);
   }
 
-  public void hide() {
+  @MainThread public void hide() {
     assertMainThread();
     View view = toast.getView();
     if (view == null) {
@@ -95,7 +96,7 @@ public final class Mixture {
     }
   }
 
-  public boolean isShowing() {
+  @MainThread public boolean isShowing() {
     assertMainThread();
     View view = toast.getView();
     return view != null && view.getParent() != null;

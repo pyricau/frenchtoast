@@ -1,5 +1,7 @@
 package frenchtoast;
 
+import android.support.annotation.MainThread;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -47,11 +49,11 @@ public final class LifecycleToastQueue implements ToastQueue {
 
   private boolean paused;
 
-  public LifecycleToastQueue() {
+  @MainThread public LifecycleToastQueue() {
     assertMainThread();
   }
 
-  @Override public void clear() {
+  @Override @MainThread public void clear() {
     assertMainThread();
     if (toastDeque.isEmpty()) {
       return;
@@ -64,7 +66,7 @@ public final class LifecycleToastQueue implements ToastQueue {
     toastDeque.clear();
   }
 
-  @Override public boolean cancel(Mixture canceledMixture) {
+  @Override @MainThread public boolean cancel(Mixture canceledMixture) {
     assertMainThread();
     if (toastDeque.isEmpty()) {
       return false;
@@ -91,7 +93,7 @@ public final class LifecycleToastQueue implements ToastQueue {
     return removed;
   }
 
-  public void pause() {
+  @MainThread public void pause() {
     assertMainThread();
     if (paused) {
       return;
@@ -105,7 +107,7 @@ public final class LifecycleToastQueue implements ToastQueue {
     MAIN_HANDLER.removeCallbacks(hideToast);
   }
 
-  public void resume() {
+  @MainThread public void resume() {
     assertMainThread();
     if (!paused) {
       return;
@@ -114,7 +116,7 @@ public final class LifecycleToastQueue implements ToastQueue {
     showFirstToast();
   }
 
-  @Override public void enqueue(Mixture mixture, long durationMs) {
+  @Override @MainThread public void enqueue(Mixture mixture, long durationMs) {
     assertMainThread();
     boolean empty = toastDeque.isEmpty();
     toastDeque.add(new EnqueuedToast(mixture, durationMs));

@@ -6,6 +6,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -23,7 +27,7 @@ public final class FrenchToast {
 
   private static QueueHolder queueHolder;
 
-  public static void install(Application application) {
+  @MainThread public static void install(@NonNull Application application) {
     assertMainThread();
     checkNotNull(application, "application");
     if (queueHolder != null) {
@@ -33,7 +37,7 @@ public final class FrenchToast {
     application.registerActivityLifecycleCallbacks(queueHolder);
   }
 
-  public static SmartToaster with(Context context) {
+  @MainThread public static SmartToaster with(@NonNull Context context) {
     assertMainThread();
     checkNotNull(context, "context");
     Activity activity = unwrapActivity(context);
@@ -84,25 +88,25 @@ public final class FrenchToast {
       this.activity = activity;
     }
 
-    @Override public Toaster shortLength() {
+    @Override @MainThread public Toaster shortLength() {
       assertMainThread();
       durationMs = ANDROID_SHORT_DELAY_MS;
       return this;
     }
 
-    @Override public Toaster longLength() {
+    @Override @MainThread public Toaster longLength() {
       assertMainThread();
       durationMs = ANDROID_LONG_DELAY_MS;
       return this;
     }
 
-    @Override public Toaster length(long duration, TimeUnit timeUnit) {
+    @Override @MainThread public Toaster length(long duration, TimeUnit timeUnit) {
       assertMainThread();
       durationMs = timeUnit.toMillis(duration);
       return this;
     }
 
-    @Override public void clear() {
+    @Override @MainThread public void clear() {
       assertMainThread();
       queueHolder.clear(activity);
     }
@@ -113,13 +117,13 @@ public final class FrenchToast {
       return showDipped(toast);
     }
 
-    @Override public Toasted showText(int stringResId) {
+    @Override public Toasted showText(@StringRes int stringResId) {
       @SuppressLint("ShowToast") Toast toast =
           Toast.makeText(activity.getApplicationContext(), stringResId, IGNORED);
       return showDipped(toast);
     }
 
-    @Override public Toasted showLayout(int layoutResId) {
+    @Override public Toasted showLayout(@LayoutRes int layoutResId) {
       Context context = activity.getApplicationContext();
       View view = LayoutInflater.from(context).inflate(layoutResId, null);
       Toast toast = new Toast(context);
@@ -127,7 +131,7 @@ public final class FrenchToast {
       return showDipped(toast);
     }
 
-    @Override public Toasted showDipped(Toast toast) {
+    @Override @MainThread public Toasted showDipped(Toast toast) {
       assertMainThread();
       Mixture mixture = Mixture.dip(toast);
       ToastQueue queue = queueHolder.getOrCreateActivityToastQueue(activity);

@@ -1,6 +1,8 @@
 package frenchtoast;
 
 import android.content.res.Resources;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 public interface Toaster {
@@ -18,7 +20,7 @@ public interface Toaster {
    * @param stringResId The resource id of the string resource to use.  Can be formatted text.
    * @throws Resources.NotFoundException if the resource can't be found.
    */
-  Toasted showText(int stringResId);
+  Toasted showText(@StringRes int stringResId);
 
   /**
    * Shows a toast that contains the inflated layout from a resource.
@@ -26,7 +28,7 @@ public interface Toaster {
    * @param layoutResId The resource id of the layout resource to use.
    * @throws Resources.NotFoundException if the resource can't be found.
    */
-  Toasted showLayout(int layoutResId);
+  Toasted showLayout(@LayoutRes int layoutResId);
 
   /**
    * Shows the provided Toast, dipped as a FrenchToast.
