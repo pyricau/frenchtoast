@@ -20,7 +20,7 @@ In your `build.gradle`:
 
 ```gradle
  dependencies {
-   compile 'info.piwai.frenchtoast:frenchtoast:1.0'
+   implementation 'info.piwai.frenchtoast:frenchtoast:1.0'
  }
 ```
 
