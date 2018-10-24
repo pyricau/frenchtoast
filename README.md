@@ -7,6 +7,7 @@ Android Toasts are amazing, but they have a few major drawbacks:
 * You cannot control **when they show up** as well as their **duration**. Other apps can enqueue toasts that will delay yours from showing up. 
 * They [break context](http://cyrilmottier.com/2012/07/24/the-making-of-prixing-4-activity-tied-notifications/): they remain on screen when the user switches to other activities.
 * The API is error prone: `Toast.makeText(context, "Important Toast", LENGTH_LONG); // Don't forget show()!`
+* They are largely americanized! Not french at all!!!!!!!!! French toast in french is "pain francais"
 
 FrenchToast gives you absolute control over your app Toasts. It does so by duplicating the internals of Android Toasts and giving you access.
 
